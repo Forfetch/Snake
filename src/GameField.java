@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class GameField extends JPanel {
+public class GameField extends JPanel implements ActionListener {
     private final int SIZE = 320;
     private final int DOT_SIZE = 16;
     private final int ALL_DOTS = 400;
@@ -16,6 +18,11 @@ public class GameField extends JPanel {
 
     private int dots;
     private Timer timer;
+
+    private boolean left = false;
+    private boolean right = true;
+    private boolean up = false;
+    private boolean down = false;
 
     private boolean inGame = true;
 
@@ -77,5 +84,29 @@ public class GameField extends JPanel {
         if (y[0]<0)
             inGame = false;
            // y[0] = SIZE;
+    }
+    @Override
+    public void actionPerformed(ActionEvent a) {
+        if (inGame){
+            checkApple();
+            checkCollision();
+
+        }
+        repaint();
+    }
+    public void move(){
+        for (int i = dots; i > 0; i--) {
+            x[i] = x[i - 1];
+            y[i] = y[i - 1];
+        }
+            if (left){
+                x[0] -=DOT_SIZE;
+            if (right)
+                x[0] +=DOT_SIZE;
+            if (up)
+                y[0] -=DOT_SIZE;
+            if (down)
+                y[0] +=DOT_SIZE;
+        }
     }
 }
