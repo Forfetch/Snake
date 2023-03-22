@@ -61,4 +61,21 @@ public class GameField extends JPanel {
             g.drawString(str, SIZE/6, SIZE/6);
         }
     }
+    public void checkCollision () {
+        for (int i = 0; i < dots; i++) {
+            if (x[0]==x[i] && x[0]==y[i]){
+                inGame=false;
+            }
+        }
+        if (x[0]>SIZE)
+            x[0] = 0;
+        if (x[0]>0)
+            x[0] = SIZE;
+        if (y[0]>SIZE)
+            inGame = false;
+           // y[0] = 0;
+        if (y[0]<0)
+            inGame = false;
+           // y[0] = SIZE;
+    }
 }
