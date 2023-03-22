@@ -47,4 +47,18 @@ public class GameField extends JPanel {
             createApple();
         }
     }
+    @Override
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+        if (inGame){
+            g.drawImage(apple, appleX, appleY, this);
+            for (int i = 0; i < dots; i++) {
+                g.drawImage(dot, x[i], y[i], this);
+            }
+        }else {
+            String str = "GAME OVER";
+            g.setColor(Color.CYAN);
+            g.drawString(str, SIZE/6, SIZE/6);
+        }
+    }
 }
