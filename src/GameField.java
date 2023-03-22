@@ -31,4 +31,20 @@ public class GameField extends JPanel {
         appleX = random.nextInt(20)*DOT_SIZE;
         appleY = random.nextInt(20)*DOT_SIZE;
     }
+    public void initGame(){
+        dots = 3;
+        for (int i = 0; i < dots; i++) {
+            y[i] = 48;
+            x[i] = 48 - i*DOT_SIZE;
+        }
+        timer = new Timer(150, this);
+        timer.start();
+        createApple();
+    }
+    public void  checkApple(){
+        if (x[0]==appleX && y[0]==appleY){
+            dots++;
+            createApple();
+        }
+    }
 }
