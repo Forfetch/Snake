@@ -27,18 +27,21 @@ public class GameField extends JPanel implements ActionListener {
     private boolean down = false;
 
     private boolean inGame = true;
-
+    int count = 150;
     public void loadImage(){
-        ImageIcon iia = new ImageIcon("apple.png");
+        ImageIcon iia = new ImageIcon("target/apple.png");
         apple = iia.getImage();
-        ImageIcon iid = new ImageIcon("dot.png");
+        ImageIcon iid = new ImageIcon("target/dot.png");
         dot = iid.getImage();
+
     }
 
     public void createApple(){
         Random random = new Random();
-        appleX = random.nextInt(20)*DOT_SIZE;
-        appleY = random.nextInt(20)*DOT_SIZE;
+
+        appleX = random.nextInt(20) * DOT_SIZE;
+        appleY = random.nextInt(20) * DOT_SIZE;
+        count-=1;
     }
     public void initGame(){
         dots = 3;
@@ -64,44 +67,51 @@ public class GameField extends JPanel implements ActionListener {
             for (int i = 0; i < dots; i++) {
                 g.drawImage(dot, x[i], y[i], this);
             }
-        }else {
+        } else {
             String str = "GAME OVER";
             g.setColor(Color.CYAN);
             g.drawString(str, SIZE/6, SIZE/6);
         }
     }
     public void checkCollision () {
-        for (int i = 0; i < dots; i++) {
-            if (x[0]==x[i] && x[0]==y[i]){
+        for (int i = dots; i >0; i--) {
+            if (x[0]==x[i] && y[0]==y[i]){
                 inGame=false;
             }
         }
         if (x[0]>SIZE)
             x[0] = 0;
-        if (x[0]>0)
-            x[0] = SIZE;
+        if (x[0]<0)
+           x[0] = SIZE;
         if (y[0]>SIZE)
-            inGame = false;
-           // y[0] = 0;
+            y[0]=0;
         if (y[0]<0)
-            inGame = false;
-           // y[0] = SIZE;
+            y[0]=SIZE;
+
     }
     @Override
     public void actionPerformed(ActionEvent a) {
         if (inGame){
             checkApple();
             checkCollision();
-
+            timer.setDelay(count);
+            move();
         }
         repaint();
+    }
+    public GameField(){
+        setBackground(Color.BLACK);
+        loadImage();
+        initGame();
+        addKeyListener(new FieldKeyListener());
+        setFocusable(true);
     }
     public void move(){
         for (int i = dots; i > 0; i--) {
             x[i] = x[i - 1];
             y[i] = y[i - 1];
         }
-            if (left){
+            if (left)
                 x[0] -=DOT_SIZE;
             if (right)
                 x[0] +=DOT_SIZE;
@@ -109,7 +119,7 @@ public class GameField extends JPanel implements ActionListener {
                 y[0] -=DOT_SIZE;
             if (down)
                 y[0] +=DOT_SIZE;
-        }
+
     }
     class  FieldKeyListener extends KeyAdapter{
         @Override
@@ -129,8 +139,8 @@ public class GameField extends JPanel implements ActionListener {
             }
             if (key == KeyEvent.VK_UP && !down){
                 left = false;
-                up = true;
                 right = false;
+                up = true;
             }
             if (key == KeyEvent.VK_DOWN && !up){
                 left = false;
