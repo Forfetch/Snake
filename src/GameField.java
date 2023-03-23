@@ -11,12 +11,12 @@ public class GameField extends JPanel implements ActionListener {
     private final int DOT_SIZE = 16;
     private final int ALL_DOTS = 400;
 
-    private Image dot, apple;
+    private Image dot, apple, apple2;
 
     private int[] x = new int[ALL_DOTS];
     private int[] y = new int[ALL_DOTS];
 
-    private int appleX, appleY;
+    private int appleX, appleY, appleX2, appleY2;
 
     private int dots;
     private Timer timer;
@@ -31,6 +31,7 @@ public class GameField extends JPanel implements ActionListener {
     public void loadImage(){
         ImageIcon iia = new ImageIcon("target/apple.png");
         apple = iia.getImage();
+        apple2 = iia.getImage();
         ImageIcon iid = new ImageIcon("target/dot.png");
         dot = iid.getImage();
 
@@ -39,9 +40,12 @@ public class GameField extends JPanel implements ActionListener {
     public void createApple(){
         Random random = new Random();
 
-        appleX = random.nextInt(20) * DOT_SIZE;
-        appleY = random.nextInt(20) * DOT_SIZE;
-        count-=1;
+            appleX2 = random.nextInt(20) * DOT_SIZE;
+            appleY2 = random.nextInt(20) * DOT_SIZE;
+            appleX = random.nextInt(20) * DOT_SIZE;
+            appleY = random.nextInt(20) * DOT_SIZE;
+            count-=1;
+        //     count1 = 0;
     }
     public void initGame(){
         dots = 3;
@@ -53,17 +57,29 @@ public class GameField extends JPanel implements ActionListener {
         timer.start();
         createApple();
     }
-    public void  checkApple(){
-        if (x[0]==appleX && y[0]==appleY){
+    int count1 = 0;
+    public void  checkApple() {
+        Random random = new Random();
+
+        if (x[0] == appleX && y[0] == appleY) {
             dots++;
-            createApple();
+            //  count1++;
+            appleX = random.nextInt(20) * DOT_SIZE;
+            appleY = random.nextInt(20) * DOT_SIZE;
+        }
+        if (x[0] == appleX2 && y[0] == appleY2) {
+            dots++;
+            appleX2 = random.nextInt(20) * DOT_SIZE;
+            appleY2 = random.nextInt(20) * DOT_SIZE;
         }
     }
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         if (inGame){
             g.drawImage(apple, appleX, appleY, this);
+            g.drawImage(apple2, appleX2, appleY2, this);
             for (int i = 0; i < dots; i++) {
                 g.drawImage(dot, x[i], y[i], this);
             }
