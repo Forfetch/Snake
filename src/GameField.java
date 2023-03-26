@@ -57,13 +57,13 @@ public class GameField extends JPanel implements ActionListener {
         timer.start();
         createApple();
     }
-    int count1 = 0;
+  //  int count1 = 0;
     public void  checkApple() {
         Random random = new Random();
 
         if (x[0] == appleX && y[0] == appleY) {
             dots++;
-            //  count1++;
+            count--;
             appleX = random.nextInt(20) * DOT_SIZE;
             appleY = random.nextInt(20) * DOT_SIZE;
         }
@@ -92,17 +92,24 @@ public class GameField extends JPanel implements ActionListener {
     public void checkCollision () {
         for (int i = dots; i >0; i--) {
             if (x[0]==x[i] && y[0]==y[i]){
-                inGame=false;
+                   inGame=false;
             }
         }
         if (x[0]>SIZE)
             x[0] = 0;
         if (x[0]<0)
            x[0] = SIZE;
-        if (y[0]>SIZE)
-            y[0]=0;
-        if (y[0]<0)
-            y[0]=SIZE;
+        if (y[0]>SIZE){
+            dots = 3;
+            y[0] = 48;
+            x[0] = 48;
+        }
+        if (y[0]<0){
+            dots = 3;
+            y[0] = 96;
+            x[0] = 96;
+        }
+
 
     }
     @Override
