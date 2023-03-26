@@ -47,17 +47,6 @@ public class GameField extends JPanel implements ActionListener {
             count-=1;
         //     count1 = 0;
     }
-    public void initGame(){
-        dots = 3;
-        for (int i = 0; i < dots; i++) {
-            y[i] = 48;
-            x[i] = 48 - i*DOT_SIZE;
-        }
-        timer = new Timer(150, this);
-        timer.start();
-        createApple();
-    }
-  //  int count1 = 0;
     public void  checkApple() {
         Random random = new Random();
 
@@ -73,6 +62,19 @@ public class GameField extends JPanel implements ActionListener {
             appleY2 = random.nextInt(20) * DOT_SIZE;
         }
     }
+
+    public void initGame(){
+        dots = 3;
+        for (int i = 0; i < dots; i++) {
+            y[i] = 48;
+            x[i] = 48 - i*DOT_SIZE;
+        }
+        timer = new Timer(150, this);
+        timer.start();
+        createApple();
+    }
+  //  int count1 = 0;
+
 
     @Override
     protected void paintComponent(Graphics g){
